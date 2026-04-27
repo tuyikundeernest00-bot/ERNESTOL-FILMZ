@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login</title>
+</head>
+
+<body>
+<h2>Admin Login</h2>
+
+<input id="email" placeholder="Email"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+
+<button id="loginBtn">Login</button>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+// ✅ Your Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyBxJf8D_X-zsQFaRGm5Yh6RrL2761JT-qk",
+  authDomain: "ernestol-filmz.firebaseapp.com",
+  projectId: "ernestol-filmz",
+  storageBucket: "ernestol-filmz.firebasestorage.app",
+  messagingSenderId: "82168230295",
+  appId: "1:82168230295:web:60913656ccdecf53ac94d2"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// 🔐 LOGIN
+document.getElementById("loginBtn").addEventListener("click", () => {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  console.log("Trying login:", email);
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log("SUCCESS:", userCredential.user);
+      alert("Login successful ✅");
+
+      // redirect
+      window.location.href = "admin.html";
+    })
+    .catch((error) => {
+      console.error("FULL ERROR:", error);
+      alert(error.code + " - " + error.message);
+    });
+});
+</script>
+
+</body>
+</html>
